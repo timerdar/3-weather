@@ -18,6 +18,7 @@ public class RedisCache{
         try(Jedis jedis = pool.getResource()){
             String tempsString = gson.toJson(temps);
             jedis.setex(city, 900, tempsString);
+            System.out.println("Добавили кэш для города " + city);
         }catch (Exception e){
             System.out.println("Error while writing temperature to redis: " + e.getMessage());
         }
