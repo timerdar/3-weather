@@ -52,8 +52,8 @@ public class OpenMeteoApi {
         Gson gson = new Gson();
         TemperaturesResponse temperaturesResponse = gson.fromJson(response.body(), TemperaturesResponse.class);
         int offset = 0;
-        for (LocalDateTime time: temperaturesResponse.getHourly().getTime()){
-            if (LocalDateTime.now().isAfter(time)){
+        for (String time: temperaturesResponse.getHourly().getTime()){
+            if (LocalDateTime.now().isAfter(LocalDateTime.parse(time))){
                 offset++;
             }else{
                 break;
@@ -61,7 +61,7 @@ public class OpenMeteoApi {
         }
         double[] res = new double[24];
         for (int i = 0; i < 24; i++){
-            res[i] = temperaturesResponse.getHourly().getTemperature_2m()[offset + i];
+            res[i] = temperaturesResponse.getHourly().getTemperature_2m().get(i + offset);
         }
         return res;
     }

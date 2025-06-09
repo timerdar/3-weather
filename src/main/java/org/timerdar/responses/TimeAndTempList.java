@@ -1,17 +1,17 @@
 package org.timerdar.responses;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 public class TimeAndTempList {
-    public LocalDateTime[] getTime() {
+    public List<String> getTime() {
         return time;
     }
 
-    public double[] getTemperature_2m() {
+    public List<Double> getTemperature_2m() {
         return temperature_2m;
     }
 
-    private LocalDateTime[] time;
-    private double[] temperature_2m;
+    private List<String> time;
+    private List<Double> temperature_2m;
 }
