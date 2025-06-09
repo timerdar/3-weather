@@ -29,7 +29,7 @@ public class OpenMeteoApi {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         Gson gson = new Gson();
         CoordinatesResponse coordinatesResponse = gson.fromJson(response.body(), CoordinatesResponse.class);
-        if (coordinatesResponse.getResults().length == 0) {
+        if (coordinatesResponse.getResults() == null) {
             throw new IllegalArgumentException("City don`t exists");
         } else {
             System.out.println("Получили из API координаты города " + city);

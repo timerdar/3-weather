@@ -35,7 +35,10 @@ public class WeatherHandler implements HttpHandler {
 
             exchange.getResponseBody().write(png);
         }catch (Exception e){
-            e.printStackTrace();
+            String json = "{\"error\" : \"" + e.getMessage() + "\"}";
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
+            exchange.sendResponseHeaders(404, json.getBytes().length);
+            exchange.getResponseBody().write(json.getBytes());
         }
 
     }

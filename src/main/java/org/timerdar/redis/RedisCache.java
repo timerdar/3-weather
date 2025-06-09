@@ -29,6 +29,7 @@ public class RedisCache{
             String tempsString = jedis.get(city);
             return gson.fromJson(tempsString, TimeAndTempList.class);
         }catch (Exception e){
+            System.out.println("Redis error: " + e.getMessage());
             return null;
         }
     }
