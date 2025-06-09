@@ -12,10 +12,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class OpenMeteoApi {
 
-    //getCityLatAndLon
     public Coordinates getCityCoordinates(String city) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -32,11 +32,12 @@ public class OpenMeteoApi {
         if (coordinatesResponse.getResults().length == 0) {
             throw new IllegalArgumentException("City don`t exists");
         } else {
+            System.out.println("Получили из API координаты города " + city);
             return coordinatesResponse.getResults()[0];
         }
     }
 
-    public double[] getTemperatureOfNextDay(String city) throws IOException, InterruptedException {
+    public TimeAndTempList getTemperatureOfNextDay(String city) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         Coordinates coordinates = getCityCoordinates(city);
@@ -59,11 +60,10 @@ public class OpenMeteoApi {
                 break;
             }
         }
-        double[] res = new double[24];
-        for (int i = 0; i < 24; i++){
-            res[i] = temperaturesResponse.getHourly().getTemperature_2m().get(i + offset);
-        }
-        return res;
+        List<String> newDates = temperaturesResponse.getHourly().getTime().subList(offset, offset + 24);
+        List<Double> newTemps = temperaturesResponse.getHourly().getTemperature_2m().subList(offset, offset + 24);
+        System.out.println("Получили новые данные о температуре из API");
+        return new TimeAndTempList(newDates, newTemps);
     }
 
 }
