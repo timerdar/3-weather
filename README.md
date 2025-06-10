@@ -18,3 +18,11 @@ https://geocoding-api.open-meteo.com/v1/search?name={city}
 https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m
 
 Внешние библиотеки: Jedis (для интеграции с redis), JFreeChart (для визуализации), Gson (для сериализации)
+
+## Запуск
+
+Для проверки работы необходимо
+1. mvn clean package
+2. java -jar target/3-weather-jar-with-dependencies.jar
+3. Желательно поднять redis на localhost:6379 (но и без него будет работать, поскольку это не основной функционал системы)
+4. Отправить запрос в браузере: http://localhost:8081/weather?city=Moscow
